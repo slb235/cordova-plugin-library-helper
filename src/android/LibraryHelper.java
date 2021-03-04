@@ -21,6 +21,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -124,14 +125,14 @@ public class LibraryHelper extends CordovaPlugin {
 	private boolean addToPhotoLibrary(String filePath) {
 		File file = new File(filePath);
 
-		Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-		scanIntent.setData(Uri.fromFile(file));
+		//Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		//scanIntent.setData(Uri.fromFile(file));
 
 		// For more information about cordova.getContext() look here:
 		// http://simonmacdonald.blogspot.com/2012/07/phonegap-android-plugins-sometimes-we.html?showComment=1342400224273#c8740511105206086350
 		Context context = this.cordova.getActivity().getApplicationContext();
-		context.sendBroadcast(scanIntent);
-
+		//context.sendBroadcast(scanIntent);
+		MediaScannerConnection.scanFile(context, new String[]{file.toString()}, null, null);
 		return true;
 	}
 
